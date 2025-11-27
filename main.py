@@ -29,7 +29,7 @@ st.write("---")
 if "user" in st.session_state:
     st.success(f"Logged in as **{st.session_state['user']}**")
 
-    st.page_link("pages/3_Dashboard.py", label="📊 Go to Dashboard")
+    st.page_link("pages/3_dashboard.py", label="📊 Go to Dashboard")
 
     # Logout button
     if st.button("Logout"):
@@ -42,7 +42,7 @@ else:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.page_link("pages/1_Login.py", label="🔑 Login")
+        st.page_link("pages/1_login.py", label="🔑 Login")
 
     with col2:
-        st.page_link("pages/2_Register.py", label="📝 Register")
+        st.page_link("pages/2_register.py", label="📝 Register")

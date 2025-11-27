@@ -16,4 +16,4 @@ if st.button("Create Account"):
         else:
             register_user(username, password)
             st.success("Account created! You can now log in.")
-            st.page_link("pages/1_Login.py", label="Proceed to Login")
+            st.page_link("pages/1_login.py", label="Proceed to Login")

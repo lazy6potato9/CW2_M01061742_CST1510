@@ -7,7 +7,7 @@ st.title("🔑 Login")
 # If already logged in
 if is_logged_in():
     st.success("You are already logged in.")
-    st.switch_page("pages/3_Dashboard.py")
+    st.switch_page("pages/3_dashboard.py")
 
 username = st.text_input("Username")
 password = st.text_input("Password", type="password")
@@ -21,7 +21,7 @@ if st.button("Login"):
         if verify_password(password, password_hash):
             login_user(db_username)
             st.success("Login successful! Redirecting...")
-            st.switch_page("pages/3_Dashboard.py")
+            st.switch_page("pages/3_dashboard.py")
         else:
             st.error("Incorrect password.")
     else:
