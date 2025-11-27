@@ -1,4 +1,4 @@
-import os
+'''import os
 import sqlite3
 
 DB_PATH = os.path.join('DATA', 'intelligence_platform.db')
@@ -77,7 +77,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main()'''
 
 
 

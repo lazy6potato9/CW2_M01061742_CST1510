@@ -1,4 +1,4 @@
-import streamlit as st
+'''import streamlit as st
 import pandas as pd
  
 df = pd.DataFrame({
@@ -35,4 +35,4 @@ with col2:
  
 with st.expander('See details'):
     st.write('Hidden content')
-    st.dataframe(df)
+    st.dataframe(df)'''

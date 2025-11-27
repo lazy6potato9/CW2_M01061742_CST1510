@@ -1,65 +1,48 @@
-import bcrypt
+import streamlit as st
 
-password = 'Magic123'
+st.set_page_config(
+    page_title="Cyber Intelligence Platform",
+    page_icon="🛡️",
+    layout="centered"
+)
 
-def hash_password(password):
+# ---------------------------------------
+# HEADER / SPLASH SECTION
+# ---------------------------------------
+st.title("🛡️ Cyber Intelligence Platform")
+st.write("### Unified Multi-Domain Intelligence System")
 
-    binary_password = password.encode('utf-8') # Convert to binary format  
-    salt = bcrypt.gensalt() # Generate a salt
-    hashed_password = bcrypt.hashpw(binary_password, salt) # Hash the password with the salt
-    return hashed_password.decode('utf-8') # Convert back to string formated_passworded password
+st.markdown("""
+Welcome to the platform where you can:
 
+- 🔐 **Register or log in** to your secure account  
+- 📊 **View cybersecurity dashboards**  
+- 🗂️ **Analyse datasets and IT tickets**  
+- 📈 **Use interactive charts and filters**  
+""")
 
+st.write("---")
 
-def validate_password(password, hashed):
-    psw = password.encode('utf-8')
-    hash_ = hashed.encode('utf-8')
-    return bcrypt.checkpw(psw, hash_)
+# ---------------------------------------
+# CHECK LOGIN STATUS
+# ---------------------------------------
+if "user" in st.session_state:
+    st.success(f"Logged in as **{st.session_state['user']}**")
 
-def register_user():
-   user_name = input("Enter username: ")
-   user_password = input("Enter password: ")
-   hash = hash_password(user_password)
-   with open("users.txt", "a") as f:
-       f.write(f"{user_name},{hash}\n")   
-       
-   print("User registered successfully.")
+    st.page_link("pages/3_Dashboard.py", label="📊 Go to Dashboard")
 
-def login_user():
-   user_name = input("Enter username: ")
-   user_password = input("Enter password: ")
-   with open("users.txt", "r") as f:
-       lines = f.readlines()
-       for line in lines:
-           name,hash = line.strip().split(",")
-           if name == user_name:
-              return validate_password(user_password, hash)
-   return False
+    # Logout button
+    if st.button("Logout"):
+        st.session_state.pop("user")
+        st.rerun()
 
-#print(register_user()) # Should register a new user
+else:
+    st.info("You are not logged in.")
 
-#print(login_user()) # Should return True if credentials are correct, else False
+    col1, col2 = st.columns(2)
 
-# Display menu options
-def menu(): 
-    print('Welcome to the User Authentication System')
-    print('choose from the following options:')
-    print('1. Register')
-    print('2. Login')
-    print('3. Exit')
+    with col1:
+        st.page_link("pages/1_Login.py", label="🔑 Login")
 
-def main(_):
-     while True:
-        menu()
-        choice = input(' > ')
-        if choice == '1':
-            register_user()
-        elif choice == '2':
-            login_user()
-        elif choice == '3':
-            print('Exiting the system. Goodbye!')
-            break
-
-
-if __name__ == "__main__":
-    main(None)
+    with col2:
+        st.page_link("pages/2_Register.py", label="📝 Register")
