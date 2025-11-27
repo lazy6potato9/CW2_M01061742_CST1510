@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-from session_manager import is_logged_in, logout_user
+from session_time import is_logged_in, logout_user
 from app.data.incidents import load_incidents
 from app.data.datasets import load_datasets_metadata
 from app.data.tickets import load_it_tickets

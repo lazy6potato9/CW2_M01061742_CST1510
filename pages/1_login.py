@@ -1,6 +1,6 @@
 import streamlit as st
 from app.data.users import get_user_by_username, verify_password
-from session_manager import login_user, is_logged_in
+from session_time import login_user, is_logged_in
 
 st.title("🔑 Login")
 
