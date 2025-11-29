@@ -3,72 +3,15 @@
 A local Streamlit scaffold providing secure login, three domain dashboards (Cyber, Data Science, IT Operations), and a cross-domain integration view. This repository is a self-contained demo that reads sample CSVs from `DOCS/` and supports file-based user storage in `DATA/users.txt`.
 
 ## Features
+- Secure authentication using bcrypt and a small file-based user store.
+- Admin account with IT-ID reset flow.
+- Sidebar navigation with pages: Dashboard, Cyber, Data Science, IT Operations, Integration.
+- Dashboard with overview KPIs and CSV-backed tables for Cyber incidents, Datasets metadata, and Tickets.
+- Integration page showing cross-domain correlations and a conservative heuristic merge (exact keys, common columns, description substring, nearest timestamp).
 
-# CW2_M01061742_CST1510 — Two Entrypoints README
-
-This README focuses on the two application entrypoints used for testing and demonstration: `main_tier2.py` and `main_tier3.py`. It includes local admin credentials intended strictly for local testing — change them immediately after first use.
-
-Summary
-- `main_tier2.py` — Tier‑2 app (lighter / reduced features). Run with `run_tier2.py` or `run_tier2.bat`.
-- `main_tier3.py` — Tier‑3 app (full feature set: integration helpers, manual 3‑way mapping, admin functions). Run with `run_tier3.py` or `run_tier3.bat`.
-
-Quick setup
-- Install dependencies:
-
-```bat
-python -m pip install -r requirements.txt
-```
-
-- Start Tier 3 (recommended for full features):
-
-```bat
-.\run_tier3.bat
-# or
-python run_tier3.py
-```
-
-- Start Tier 2 (lighter):
-
-```bat
-.\run_tier2.bat
-# or
-python run_tier2.py
-```
-
-Default ports: Tier 2 → `8501`, Tier 3 → `8502`. If a port is occupied, start the runner on a free port or edit the runner script.
-
-Local admin credentials (FOR TESTING ONLY)
-- Username: `admin`
-- Password: `ChangeMe!2025`
-
-Security IMPORTANT
-- These credentials are provided for local testing convenience only. DO NOT commit these credentials to public repositories or production systems.
-- Recommended immediate actions after first run:
-  - Log in with the `admin` account and change the admin password via the app (or create a different admin user).
-  - Remove any README-exposed credentials from the repository and rotate the password.
-  - Consider storing secrets in environment variables rather than in files.
-
-Authentication behavior
-- Passwords are stored as salted bcrypt hashes in `DATA/intelligence_platform.db`.
-- Sessions are ephemeral: refreshing the browser will log the user out.
-
-Files and locations of interest
-- `main_tier2.py`, `main_tier3.py` — entrypoints and UI logic
-- `run_tier2.py` / `run_tier3.py` and corresponding `.bat` files — convenient runners
-- `app/data/users.py` — user creation, hashing and verification
-- `session_time.py` — session handling and active-user tracking
-- `pages/3_dashboard.py` — dashboard and integration UI
-
-Backups & handling credentials
-- If you keep backups of the users table, ensure backups contain only hashed passwords and encrypt them. Do not store unencrypted credential backups in the repo.
-
-Need changes?
-- I can remove the admin creds from the README and instead provide a one-time admin creation script or environment-based secret loader. Tell me which you prefer and I will implement it.
-
----
-Last updated: 2025-11-29
----
-Last updated: 2025-11-29
+## Prerequisites
+- Python 3.10+ (recommended).
+- Git (optional) to clone repository.
 
 ## Quick Setup (Windows - cmd.exe)
 1. Create and activate a virtual environment (recommended):

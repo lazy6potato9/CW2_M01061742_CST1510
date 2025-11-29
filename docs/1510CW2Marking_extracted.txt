@@ -1,0 +1,95 @@
+--- PAGE 1 ---
+
+CW2 – Multi-Domain Intelligence Platform –
+Marking Guide
+Student Information Details
+Student Name:__________________________________________
+Student Number:__________________________________________
+Marks: __________________________________________
+Marking Criteria (20-Point Scale)
+Criterion1–4 (70% +)5–8 (60–
+69%)9–12 (50–
+59%)13–16 (40–49%)
+1. Report and
+Technical
+Explanation
+(35%)Excellent clarity
+and depth; well-
+justified design
+and method; clear
+understanding.Thorough
+explanation
+with good
+justification;
+mostly clear
+structure.Adequate
+explanation;
+justification
+limited but
+present.Weak discussion
+with little
+justification.
+2. Software
+Functionality and
+Implementation
+(40%)Fully functional;
+all features
+implemented
+correctly; smooth
+operation.Most
+features
+functional;
+minor issues.Basic
+requirements
+met; some
+errors or
+missing
+features.Partially
+functional; lacks
+completeness.
+3. Code Quality
+and Structure
+(15%)Clean, modular,
+well-commented
+code; efficient
+and readable.Good
+structure and
+readability.Acceptable
+structure;
+some
+inefficiencies.Limited structure;
+poor commenting.
+4. Analytical
+Insights and
+Recommendations
+(10%)Strong analytical
+reasoning; clear
+insights and
+recommendations.Good
+insights;
+clear
+interpretation
+of data.Basic
+description
+with limited
+analysis.Minimal insight or
+unclear
+recommendations.
+Total (out of 100)
+Tier Guidance
+Tier Implementation ScopeTypical Grade
+Range
+Tier 1 – Pass/MeritOne complete domain dashboard with all
+core features.50–69%
+--- PAGE 2 ---
+
+Tier Implementation ScopeTypical Grade
+Range
+Tier 2 –
+Merit/DistinctionTwo domains implemented with integration
+and good structure.70–84%
+Tier 3 – High
+DistinctionThree domains implemented with advanced
+integration and polish.85–100%
+ 
+In [ ]:
