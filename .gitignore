@@ -1,6 +1,10 @@
 # Virtual environment
 venv/
 env/
+\.venv/
+Scripts/
+Lib/
+Lib/site-packages/
 # Python cache files
 __pycache__/
 *.pyc
@@ -9,6 +13,13 @@ __pycache__/
 # Environment variables
 .env
 .env.local
+
+# Jupyter and notebook checkpoints
+.ipynb_checkpoints/
+
+# Backup and editor files
+*.swp
+*~
 
 #IDE settings
 .vscode/
