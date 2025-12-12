@@ -1,22 +1,17 @@
 """
-main.py — Entry selector for project variants
+main.py — Entry selector (now single variant)
 
-This file imports one of the two app variants created for the coursework.
-Uncomment the variant you want to run and comment out the other.
-
-By default the Tier 2 app is active (two-domain integration). To switch
-to the Tier 3 version (three-domain advanced integration), comment/uncomment
-the imports below and restart Streamlit.
+Tier 2 has been removed. This file simply loads the full-featured app (previously Tier 3),
+which now lives in home.py.
 """
 
-# Active by default: Tier 2 variant
 # Ensure Streamlit page config is set early so headings render correctly
 import streamlit as st
 
 from app.services.user_service import ensure_admin, ADMIN_USERNAME, ADMIN_IT_ID, reset_user_password
 from app.data.users import get_user_by_username, verify_password, register_user
 from session_time import login_user, is_logged_in
-from main_tier2 import run_app as run_variant
+from home import run_app as run_variant
 
 
 def _show_auth_ui():

@@ -1,140 +1,124 @@
 # Multi-Domain Intelligence Platform (Streamlit)
 
-A local Streamlit scaffold providing secure login, three domain dashboards (Cyber, Data Science, IT Operations), and a cross-domain integration view. This repository is a self-contained demo that reads sample CSVs from `DOCS/` and supports file-based user storage in `DATA/users.txt`.
+A local Streamlit scaffold providing secure login, three domain dashboards (Cyber, Data Science, IT Operations), and cross-domain integration with multiple heuristics. The app reads sample CSVs from `DATA/` and `DOCS/`, supports file-based user storage, and exports merged results to CSV.
+
+## Quick Start
+
+### 1. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run the app
+```bash
+cd CW2_Project
+python -m streamlit run home.py --server.port 8502
+```
+
+Open `http://localhost:8502` in your browser. (If port 8502 is in use, try `--server.port 8505` or another free port.)
 
 ## Features
 
-# CW2_M01061742_CST1510 — Two Entrypoints README
+- **🔐 Secure Authentication** — Passwords stored as salted bcrypt hashes; sessions are ephemeral (log out on refresh).
+- **📊 Three Domain Dashboards** — Cyber incidents, Datasets metadata, and IT Tickets with summary charts and detailed views.
+- **🧩 Multi-Heuristic Integration** — Exact joins, fuzzy description matching, nearest-timestamp merging, and auto cross-linking across three domains.
+- **⬇️ CSV Export** — Download merged results directly from the UI.
+- **👤 Admin Panel** — Manage user passwords via secure IT ID verification.
 
-This README focuses on the two application entrypoints used for testing and demonstration: `main_tier2.py` and `main_tier3.py`. It includes local admin credentials intended strictly for local testing — change them immediately after first use.
+## Default Admin Credentials (Testing Only)
 
-Summary
-- `main_tier2.py` — Tier‑2 app (lighter / reduced features). Run with `run_tier2.py` or `run_tier2.bat`.
-- `main_tier3.py` — Tier‑3 app (full feature set: integration helpers, manual 3‑way mapping, admin functions). Run with `run_tier3.py` or `run_tier3.bat`.
+| Field | Value |
+|-------|-------|
+| Username | `admin` |
+| Password | `ChangeMe!2025` |
+| Admin IT ID | `MS3659` |
 
-Quick setup
-- Install dependencies:
+⚠️ **Security Warning:** Change these credentials immediately after first login. Do not commit them to public repositories.
 
-```bat
-python -m pip install -r requirements.txt
+## Project Structure
+
+```
+CW2_Project/
+├── home.py                 # Main app entrypoint (auth + dashboards + integration)
+├── session_time.py         # Session and active-user tracking
+├── app/
+│   ├── data/
+│   │   ├── users.py       # User registration, password hashing/verification
+│   │   ├── incidents.py   # Cyber incident data models
+│   │   ├── tickets.py     # IT ticket models
+│   │   └── datasets.py    # Dataset metadata models
+│   └── services/
+│       └── user_service.py # Admin utilities (password reset, IT ID verification)
+└── DATA/
+    ├── intelligence_platform.db  # User credentials (auto-created)
+    ├── cyber_incidents.csv       # Cyber domain sample data
+    ├── datasets_metadata.csv     # Dataset domain sample data
+    └── it_tickets.csv            # IT Tickets domain sample data
 ```
 
-- Start Tier 3 (recommended for full features):
+## Using the App
 
-```bat
-.\run_tier3.bat
-# or
-python run_tier3.py
-```
+### Login & Registration
+- Click **Login** in the sidebar to authenticate.
+- Click **Register** to create a new user account.
+- Password policy: minimum 6 chars, at least one uppercase, one lowercase, one digit, one special character.
 
-- Start Tier 2 (lighter):
+### Dashboard Tabs (when logged in)
+1. **Cyber** — Incident records with severity breakdown and incident-type distribution.
+2. **Datasets** — Metadata and record counts per dataset.
+3. **Tickets** — IT ticket records with priority distribution.
+4. **Active Users** — Real-time count of logged-in users (admin-only expanded view).
+5. **Integration** — Advanced heuristics for merging across domains.
 
-```bat
-.\run_tier2.bat
-# or
-python run_tier2.py
-```
+### Integration Heuristics
 
-Default ports: Tier 2 → `8501`, Tier 3 → `8502`. If a port is occupied, start the runner on a free port or edit the runner script.
+Choose from:
+- **Exact common-key join** — Merges on shared columns across all three domains.
+- **Description substring match** — Fuzzy matches incident/ticket descriptions.
+- **Nearest timestamp (days)** — Joins records within a configurable time window.
+- **Auto cross-link (three-way)** — Automatically attempts all heuristics and reports which succeeded.
+- **Fuzzy pairwise match** — Text-similarity-based matching between two domains.
+- **Fuzzy three-way attach** — Fuzzy incidents↔tickets, then attaches datasets by name substring.
+- **Manual three-way cross-link** — Inspect schemas and manually select join columns.
 
-Local admin credentials (FOR TESTING ONLY)
-- Username: `admin`
-- Password: `ChangeMe!2025`
+## Authentication & Security
 
-Security IMPORTANT
-- These credentials are provided for local testing convenience only. DO NOT commit these credentials to public repositories or production systems.
-- Recommended immediate actions after first run:
-  - Log in with the `admin` account and change the admin password via the app (or create a different admin user).
-  - Remove any README-exposed credentials from the repository and rotate the password.
-  - Consider storing secrets in environment variables rather than in files.
+- **Password Storage** — Bcrypt hashing with salt; plaintext passwords never stored.
+- **Sessions** — Ephemeral; refreshing the page logs out the user.
+- **Admin Reset Flow** — Only users with the correct **Admin IT ID** can reset other users' passwords via the sidebar.
+- **File-Based User Store** — Stored in `DATA/intelligence_platform.db` (SQLite).
 
-Authentication behavior
-- Passwords are stored as salted bcrypt hashes in `DATA/intelligence_platform.db`.
-- Sessions are ephemeral: refreshing the browser will log the user out.
+## Data Files
 
-Files and locations of interest
-- `main_tier2.py`, `main_tier3.py` — entrypoints and UI logic
-- `run_tier2.py` / `run_tier3.py` and corresponding `.bat` files — convenient runners
-- `app/data/users.py` — user creation, hashing and verification
-- `session_time.py` — session handling and active-user tracking
-- `pages/3_dashboard.py` — dashboard and integration UI
+**Sample CSV files** (place in `DATA/` or `DOCS/`):
+- `cyber_incidents.csv` — Columns: `id`, `severity`, `incident_type`, `description`, etc.
+- `datasets_metadata.csv` — Columns: `dataset_name`, `name`, `records`, etc.
+- `it_tickets.csv` — Columns: `id`, `priority`, `status`, `description`, etc.
 
-Backups & handling credentials
-- If you keep backups of the users table, ensure backups contain only hashed passwords and encrypt them. Do not store unencrypted credential backups in the repo.
-
-Need changes?
-- I can remove the admin creds from the README and instead provide a one-time admin creation script or environment-based secret loader. Tell me which you prefer and I will implement it.
-
----
-Last updated: 2025-11-29
----
-Last updated: 2025-11-29
-
-## Quick Setup (Windows - cmd.exe)
-1. Create and activate a virtual environment (recommended):
-
-```cmd
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-2. Install required packages:
-
-```cmd
-pip install streamlit pandas bcrypt pyarrow
-```
-
-3. (Optional) If you prefer, create a `requirements.txt` with the above packages and run `pip install -r requirements.txt`.
-
-## Run the app
-From the repository root (where `main.py` lives) run:
-
-```cmd
-.venv\Scripts\python -m streamlit run main.py --server.port 8504
-```
-
-Open the Local URL printed by Streamlit (e.g. `http://localhost:8504`).
-
-## Default admin credentials
-- Username: `iambrucepain990`
-- Password: `IRONMANSUCKS69`
-- Admin IT ID (for reset flow): `MS3659`
-
-The admin account is persisted automatically into `DATA/users.txt` on first run.
-
-## Using the app
-- Login or Register using the sidebar.
-- After login you will be redirected automatically to the Dashboard.
-- Dashboard tabs present Overview charts and the CSV tables for Cyber incidents, Datasets metadata, and Tickets.
-- Integration page attempts a conservative cross-domain merge and displays which heuristic was used and how many matches were found; if no merge is possible the page shows recent samples from each domain.
-
-## Data files
-- Sample CSVs are in `DOCS/`:
-  - `cyber_incidents.csv`
-  - `datasets_metadata.csv`
-  - `it_tickets.csv`
-- App data and logs are stored in `DATA/` (including `users.txt`, `login_attempts.log`, and `admin_verify.log`).
-
-## How integration works (brief)
-- The app prefers exact key joins (e.g., `incident_id` ↔ `id`) when present.
-- If no explicit keys match, it tries reasonable alternatives (shared column names), then a description-substring heuristic, and finally a nearest-timestamp merge (within a configurable tolerance).
-- The chosen heuristic and counts of matched/unmatched rows are presented on the Integration page for transparency.
-
-## Admin tasks
-- To add an admin or reset the admin password using the IT ID flow, use the "Forgot Password (admin only)" button on the Login page.
-- To inspect or edit registered users directly, see `DATA/users.txt` (format `username|bcrypt_hash`). Editing this file manually is not recommended unless you understand bcrypt hashes.
+The app auto-detects and loads these files from multiple search paths.
 
 ## Troubleshooting
-- If the server reports a port-in-use error, pass a different port to Streamlit (for example `--server.port 8505`).
-- If pages do not reflect recent code edits, restart the Streamlit process.
 
-## Extending the app
-- Add new CSVs or database connectors and update `app/data/*.py` helpers.
-- You can replace the file-based user store with a proper database by swapping the `read_users`, `write_users`, and `ensure_users_file` implementations in `main.py`.
+| Issue | Solution |
+|-------|----------|
+| Port in use | Try `--server.port 8505` or another free port. |
+| Code changes not reflected | Restart the Streamlit process. |
+| Login fails | Ensure `DATA/intelligence_platform.db` exists and is readable. |
+| CSV not found | Place files in `DATA/` or `DOCS/` subdirectories. |
 
-## Contact / Next steps
-- If you'd like me to (A) add a UI to choose join keys, (B) export merged results to CSV, or (C) tighten the integration heuristics, tell me which option and I will implement it.
+## Extending the App
+
+- **Add new data domains** — Create models in `app/data/` and import them in `home.py`.
+- **Replace file-based storage** — Swap `users.py` to use a real database (PostgreSQL, MySQL, etc.).
+- **Custom heuristics** — Edit the integration functions in `home.py` to add new merge strategies.
+
+## Notes
+
+- Tier 2 (prototype) has been removed; only the full-featured `home.py` is maintained.
+- The old `main.py` entry point has been deleted for clarity.
+- All Streamlit-recommended best practices are followed (state management, session caching, etc.).
 
 ---
-Happy testing — open `http://localhost:8504` after starting the app.
+
+Last updated: 2025-12-12
 
